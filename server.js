@@ -27,7 +27,10 @@ var storage = multer.diskStorage({
 });
 
 var upload = multer({
-    storage: storage
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 //Refer - https://stackoverflow.com/a/38692588/7640300 | For Error Handling refer - Comments - https://stackoverflow.com/a/34698643/7640300
+    }
 });
 
 var multipleUploads = upload.fields([{ name: 'iconFile', maxCount: 1}, { name: 'imageFile', maxCount: 1}]);
