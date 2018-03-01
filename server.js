@@ -28,6 +28,16 @@ app.post('/submitForm', multipleUploads, function(req, res) {
     console.log((req.files['iconFile']) ? "Icon received" : "Icon not received");
     console.log((req.files['imageFile']) ? "Image received" : "Image not received");
 
+    console.log("Extracting file information");
+    console.info("fieldname : " + req.files['iconFile'][0]['fieldname']);
+    console.info("originalname : " + req.files['iconFile'][0]['originalname']);
+    console.info("encoding : " + req.files['iconFile'][0]['encoding']);
+    console.info("mimetype : " + req.files['iconFile'][0]['mimetype']);
+    console.info("size : " + req.files['iconFile'][0]['size']);
+    console.info("destination : " + req.files['iconFile'][0]['destination']);
+    console.info("filename : " + req.files['iconFile'][0]['filename']);
+    console.info("path : " + req.files['iconFile'][0]['path']);
+
     res.send("Form submission received");
 
 })
