@@ -23,7 +23,10 @@ var upload = multer({
             console.log(file);
             cb(null, "test/" + Date.now() + file.originalname); // This will save the file to a folder 'test' inside the bucket
         }
-    })
+    }),
+    limits: {
+        fileSize: 1024
+    }
 })
 
 var publicPath = path.resolve(__dirname, "./public");
