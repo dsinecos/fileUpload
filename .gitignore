@@ -1,1 +1,4 @@
 node_modules/
+/serverAwsStorage.js
+/data.json
+/serverAwsStorageForGit.js
