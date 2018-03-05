@@ -2,10 +2,21 @@ var express = require('express')
 var app = express()
 var multer = require('multer')
 var path = require('path');
+var http = require('http');
 
-var PORT = process.env.PORT || 2500;
+var PORT = process.env.PORT || 2501;
 
-app.listen(PORT);
+// var server = app.listen(PORT, function() {
+//     var host = server.address().address;
+//     var port = server.address().port;
+
+//     console.log("App listening at http://%s:%s", host, port);
+// });
+
+var server = http.createServer(app);
+server.listen(PORT, '0.0.0.0');
+
+module.exports = server;
 
 var publicPath = path.resolve(__dirname, "./public");
 
