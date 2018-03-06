@@ -14,7 +14,7 @@ var PORT = process.env.PORT || 2501;
 // });
 
 var server = http.createServer(app);
-server.listen(PORT, '0.0.0.0');
+server.listen(PORT);
 
 module.exports = server;
 
@@ -52,4 +52,9 @@ app.post('/submitForm', multipleUploads, function(req, res) {
 
     res.send("Form submission received");
 
+})
+
+app.get('/testParam/:id/test', function(req, res, next) {
+    res.status(200).send("Success");
+    console.log(req.params.id);
 })

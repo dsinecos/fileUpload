@@ -14,37 +14,55 @@ describe("Test File Upload", function () {
 
     it("Test if form is submitted", function (done) {
 
-        // fs.readFile(path.join(__dirname, "../Icon.png"), function (err, data) {
-        //     if (err) {
-        //         console.log(err);
-        //         process.exit(1);
-        //     }
-
-        //     // content = util.format(data, "test", "test", "test");
-        //     // console.log(content);
-
-        // });
-
         var formData = {
             title: "Title",
             message: "Message",
             url: "Redirect URL"
         }
 
-        // formData.iconFile = data;
-
-        // console.log(data);
         chai
             .request(server)
             .post('/submitForm')
+            .attach('iconFile', fs.readFileSync(__dirname + '/test.png'), 'avatar.png')
+            .attach('imageFile', fs.readFileSync(__dirname + '/Apple.jpeg'), 'apple.jpeg')
             .send(formData)
             .end(function (err, res) {
                 expect(res.status).to.equal(200);
+                done();
             });
-        done();
+
+
+
+    })
+
+    it("Can submit params", function (done) {
+
+        var id = 1234;
+
+        chai
+            .request(server)
+            .get('/testParam/' + id + '/test')
+            .end(function (err, res) {
+                expect(res.status).to.equal(200);
+                done();
+            });
 
 
     })
 })
 
 // Loading a file into a variable
+
+// describe.skip("Test POST Notification request", function () {
+//     it("Form submitted without file upload", function (done) {
+//         var formData = {
+//             title: "Title",
+//             message: "Message",
+//             onClickUrl: "Redirect URL when notification is clicked",
+//         }
+
+//         chai
+//             .request(server)
+//             .post('/notifications')
+//     })
+// })
