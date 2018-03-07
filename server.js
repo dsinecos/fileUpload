@@ -29,10 +29,10 @@ app.get('/', function (req, res) {
 });
 
 var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
+    destination: function (req, file, cb) {
         cb(null, 'uploads/');
     },
-    filename: function(req, file, cb) {
+    filename: function (req, file, cb) {
         cb(null, file.originalname)
     }
 });
@@ -44,9 +44,10 @@ var upload = multer({
     }
 });
 
-var multipleUploads = upload.fields([{ name: 'iconFile', maxCount: 1}, { name: 'imageFile', maxCount: 1}]);
+var multipleUploads = upload.fields([{ name: 'iconFile', maxCount: 1 }, { name: 'imageFile', maxCount: 1 }]);
 
-app.post('/submitForm', multipleUploads, function(req, res) {
+app.post('/submitForm', multipleUploads, function (req, res) {
+    console.log(req.body);
     console.log("Form submission received");
     console.log((req.files['iconFile']) ? "Icon received" : "Icon not received");
 
@@ -54,7 +55,32 @@ app.post('/submitForm', multipleUploads, function(req, res) {
 
 })
 
-app.get('/testParam/:id/test', function(req, res, next) {
+// Learning to use express-validator
+
+const { check, validationResult } = require('express-validator/check');
+const { matchedData, sanitize } = require('express-validator/filter');
+
+var validators = [
+    check('username', "Username should be at least 5 characters").isLength({min: 5}),
+    check('password', 'Enter Password').exists(),
+]
+
+var handleValidationErrors = function (req, res, next) {
+
+    var errors = validationResult(req);
+    console.log("Inside handleValidationErrors");
+
+    if (!errors.isEmpty()) {
+        console.log(errors.mapped());
+        return res.status(400).json({ errors: errors.mapped() });
+    } else {
+        next();        
+    }
+
+}
+
+app.post('/testValidation', multer().none(), validators, handleValidationErrors, function (req, res, next) {
+
     res.status(200).send("Success");
-    console.log(req.params.id);
+
 })
