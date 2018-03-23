@@ -47,6 +47,7 @@ var upload = multer({
 var multipleUploads = upload.fields([{ name: 'iconFile', maxCount: 1 }, { name: 'imageFile', maxCount: 1 }]);
 
 app.post('/submitForm', multipleUploads, function (req, res) {
+    console.log(req.headers);
     console.log(req.body);
     console.log("Form submission received");
     console.log((req.files['iconFile']) ? "Icon received" : "Icon not received");

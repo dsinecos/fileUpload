@@ -23,17 +23,13 @@ describe("Test File Upload", function () {
         chai
             .request(server)
             .post('/submitForm')
-            .field("title", "customValue")
             .attach('iconFile', fs.readFileSync(__dirname + '/test.png'), 'avatar.png')
             .attach('imageFile', fs.readFileSync(__dirname + '/Apple.jpeg'), 'apple.jpeg')
-            .send(formData)
+            .field(formData)
             .end(function (err, res) {
                 expect(res.status).to.equal(200);
                 done();
             });
-
-
-
     })
 
     // it("Can submit params", function (done) {
